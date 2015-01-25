@@ -1,0 +1,17 @@
+{
+  "name": "xss-defend-files",
+  "version": "1.0.0",
+  "description": "Boilerplate code for SecureYourNode XSS Defence problem",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Adam Brady <adam@boxxen.org>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "ejs": "^2.2.3",
+    "express": "^4.11.1"
+  }
+}
