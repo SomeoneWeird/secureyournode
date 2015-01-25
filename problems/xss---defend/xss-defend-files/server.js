@@ -37,6 +37,10 @@ app.post('/addpost', function(request, response) {
   response.redirect('/');
 });
 
+app.get('/posts', function(request, response) {
+  response.json(posts);
+});
+
 /*** Please do not change anything below this line ***/
 
 if(require.main === module) {
