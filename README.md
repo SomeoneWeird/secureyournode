@@ -13,6 +13,17 @@ This workshop will be a mix of general web security (XSS, CSRF), and javascript-
 
     npm install -g secureyournode
 
+# Problems
+
+* XSS - Attack
+* XSS - Defend
+* ~~CSRF - Attack~~
+* ~~CSRF - Defend~~
+* ~~Injection - Attack~~
+* ~~Injection - Defend~~
+* ~~(JS) with - Attack~~
+* ~~(JS) with - Defend~~
+
 # LICENSE
 
 MIT
