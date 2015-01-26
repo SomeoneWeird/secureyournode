@@ -7,7 +7,6 @@ var fs   = require('fs');
 var ncp       = require('ncp').ncp;
 var supertest = require('supertest');
 var async     = require('async');
-var cheerio   = require('cheerio');
 
 exports.problem = "Please run `secureyournode run` to copy files.";
 
@@ -25,96 +24,110 @@ exports.verify = function(args, cb) {
   var attempt = require(attemptPath);
 
   if(!attempt.app) {
-    console.error("Your attempt is no longer exporting `app`, please re-add the code under the 'Do Not Edit' section :)");
-    return process.exit(1);
+    console.error("\nYour attempt is no longer exporting `app`, please re-add the code under the 'Do Not Edit' section :)\n");
+    return cb(false);
   }
 
   var request = supertest(attempt.app);
 
-  var error = function(err) {
-    console.error("OOPS! There was an error:", err);
-    return cb(false);
-  }
+  async.series([
 
-  request.get('/')
-  .expect(200)
-  .end(function(err, res) {
+    function(done) {
 
-    if(err) return error(err);
+      request.get('/posts')
+      .expect(200)
+      .send('Accept', 'application/json')
+      .end(function(err, res) {
 
-    var $ = cheerio.load(res.text);
+        if(err) {
+          return done(err);
+        }
 
-    request.get('/posts')
-    .expect(200)
-    .send('Accept', 'application/json')
-    .end(function(err, res) {
+        if(res.body.length > 0) {
+          return done("\nYou have pre-added posts, please remove them and reverify.\n");
+        }
 
-      if(err) return error(err);
+        return done();
 
-      if(res.body.length > 0) {
-        console.error("You have pre-added posts, please remove them and reverify");
-        return cb(false);
-      }
+      });
+
+    },
+
+    function(done) {
 
       request.post('/addpost')
       .send('Content-Type', 'application/json')
       .send({ title: "hello", text: "world" })
       .expect(302)
-      .end(function(err) {
+      .end(done);
 
-        if(err) return error(err);
+    },
 
-        request.get('/posts')
-        .expect(200)
-        .send('Accept', 'application/json')
-        .end(function(err, res) {
+    function(done) {
 
-          if(err) return error(err);
+      request.get('/posts')
+      .expect(200)
+      .send('Accept', 'application/json')
+      .end(function(err, res) {
 
-          if(res.body.length == 0) {
-            console.error("\nFor some reason posts aren't being added! Try re-verifying when you've fixed this.\n");
-            return cb(false);
-          }
+        if(err) {
+          return done(err);
+        }
 
-          if(res.body[0].title != "hello" || res.body[0].text != "world") {
-            console.error("\nHmm, posts don't seem to be added properly, try again.\n");
-            return cb(false);
-          }
+        if(res.body.length == 0) {
+          return done("\nFor some reason posts aren't being added! Try re-verifying when you've fixed this.\n");
+        }
 
-          request.post('/addpost')
-          .send('Content-Type', 'application/json')
-          .send({ title: "<b>hello</b>", text: "<b>world</b>" })
-          .expect(302)
-          .end(function(err) {
+        if(res.body[0].title != "hello" || res.body[0].text != "world") {
+          return done("\nHmm, posts don't seem to be added properly, try again.\n");
+        }
 
-            if(err) return error(err);
-
-            request.get('/posts')
-            .expect(200)
-            .send('Accept', 'application/json')
-            .end(function(err, res) {
-
-              if(err) return error(err);
-
-              console.log(res.body[1]);
-              
-              // TODO: fix this
-              if(res.body[1].title == "<b>hello</b>" || res.body[1].text == "<b>world</b>") {
-                console.error("\nOOPS! Doesn't seem like you've escaped things properly!\n");
-                return cb(false);
-              }
-
-              return cb(true);
-
-            });
-
-          });
-
-        });
+        return done();
 
       });
 
-    });
+    },
+
+    function(done) {
+
+      request.post('/addpost')
+      .send('Content-Type', 'application/json')
+      .send({ title: "<b>hello</b>", text: "<b>world</b>" })
+      .expect(302)
+      .end(done);
+
+    },
+
+    function(done) {
+
+      request.get('/posts')
+      .expect(200)
+      .send('Accept', 'application/json')
+      .end(function(err, res) {
+
+        if(err) {
+          return done(err);
+        }
+
+        // TODO: fix this
+        if(res.body[1].title == "<b>hello</b>" || res.body[1].text == "<b>world</b>") {
+          return done("\nDoesn't seem like you've escaped things properly!\n");
+        }
+
+        return done();
+
+      });
+
+    }
+
+  ], function(err) {
+
+    if(err) {
+      console.error("\nOOPS, looks like something went wrong!\n", err);
+      return cb(false);
+    }
+
+    return cb(true);
 
   });
 
