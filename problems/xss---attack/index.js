@@ -37,7 +37,7 @@ exports.verify = function(args, cb) {
   app.post('/addposts', function(req, res) {
     posts.push(req.body);
 
-    [ req.body.title, req.body.body ].forEach(function(s) {
+    [ req.body.title, req.body.text ].forEach(function(s) {
       if(/<script>alert\(['"]?5['"]?\);?<\/script>/.test(s)) {
         success = true;
       }
