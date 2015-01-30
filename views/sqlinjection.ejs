@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html class="no-js">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title></title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <style>
+          body {
+              padding-top: 50px;
+              padding-bottom: 20px;
+          }
+      </style>
+      <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="css/main.css">
 
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+      <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -40,38 +40,29 @@
         <p>This lesson is going to teach you how to exploit basic SQL Injection</p>
         <p><a class="btn btn-primary btn-lg" href="" role="button">Learn more about SQL Injection</a></p>
 
+        <br>
+          <center>
+
         <% if(valid) { %>
 
           <% if(valid == "cheated") { %>
 
-            <br>
-
-            <center>
-              <div style="width: 50%; background-color: red; border-radius: 20px; webkit-border-radius: 20px;">
-                Oh no! You can't do that!
-              </div>
-            </center>
+            <div style="width: 50%; background-color: red; border-radius: 20px; webkit-border-radius: 20px;">
+              Oh no! You can't do that!
+            </div>
 
           <% } else if(valid == "error") { %>
 
-            <br>
-
-            <center>
-              <div style="width: 50%; background-color: red; border-radius: 20px; webkit-border-radius: 20px;">
-                Oh no! An error occured, are you sure your query was valid?<br>
-                <%= error %>
-              </div>
-            </center> 
+            <div style="width: 50%; background-color: red; border-radius: 20px; webkit-border-radius: 20px;">
+              Oh no! An error occured, are you sure your query was valid?<br>
+              <%= error %>
+            </div>
 
           <% } else { %>
 
-            <br>
-
-            <center>
-              <div style="width: 50%; background-color: lime; border-radius: 20px; webkit-border-radius: 20px;">
-                Congrats! You've completed this exercise, you can close this page now.
-              </div>
-            </center>
+            <div style="width: 50%; background-color: lime; border-radius: 20px; webkit-border-radius: 20px;">
+              Congrats! You've completed this exercise, you can close this page now.
+            </div>
 
           <% } %>
 
@@ -84,7 +75,7 @@
 
       blah<br><br>
 
-      Objective: bypass login to login as 'admin'.
+      Objective: bypass login to.. login as 'admin'.
 
       <hr>
 
