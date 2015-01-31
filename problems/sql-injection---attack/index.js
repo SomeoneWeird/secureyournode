@@ -22,6 +22,8 @@ exports.verify = function(args, cb) {
   app.use(express.static(path.join(__dirname, 'static')));
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  app.set('views', path.join(__dirname, 'views'));
+
   app.get('/', function(req, res) {
     res.render('sqlinjection.ejs', {
       valid: false
