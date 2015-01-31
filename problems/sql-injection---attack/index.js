@@ -9,7 +9,7 @@ var ejs        = require('ejs');
 var express    = require('express');
 var bodyParser = require('body-parser');
 var openport   = require('openport');
-var sqlite     = require('sqlite3').verbose();
+var sqlite     = require('sqlite3');
 
 exports.problem = "Please run `secureyournode verify` to start!";
 

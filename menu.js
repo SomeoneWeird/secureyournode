@@ -3,8 +3,8 @@ module.exports = [
   "XSS - Defend",
   // "CSRF - Attack",
   // "CSRF - Defend",
-  "SQL Injection - Attack"
-  // "SQL Injection - Defend",
+  "SQL Injection - Attack",
+  "SQL Injection - Defend"
   // "(JS) with - Attack",
   // "(JS) with - Defend"
 ]
