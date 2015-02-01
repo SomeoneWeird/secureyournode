@@ -40,17 +40,13 @@
         <p>This lesson is going to teach you how to exploit <a href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection"><i>persistent</i></a> <a href="http://www.acunetix.com/blog/articles/persistent-cross-site-scripting/">xss</a>.</p>
         <p><a class="btn btn-primary btn-lg" href="https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)" role="button">Learn more about <i>persistent</i> xss</a></p>
 
-        <% if(data.success) { %>
-
-          <br>
-
+        <div style="display: none;" id="successResult">
           <center>
             <div style="width: 50%; background-color: lime; border-radius: 20px; webkit-border-radius: 20px;">
               Congrats! You've completed this exercise, you can close this page now.
             </div>
           </center>
-
-        <% } %>
+        </div>
 
       </div>
     </div>
@@ -63,22 +59,26 @@
 
       <center>
 
-        <% for(var i = 0; i < data.posts.length; i++) { %>
+        <div id="posts">
 
-          <table border=1>
-            <tr>
-              <td><b><%- data.posts[i].title %></b></td>
-            </tr>
-            <tr>
-              <td><%- data.posts[i].text %></td>
-            </tr>
-          </table>
+          <% for(var i = 0; i < data.posts.length; i++) { %>
 
-        <% } %>
+            <table border=1>
+              <tr>
+                <td><b><%- data.posts[i].title %></b></td>
+              </tr>
+              <tr>
+                <td><%- data.posts[i].text %></td>
+              </tr>
+            </table>
+
+          <% } %>
+
+        </div>
 
         <br>
 
-        <form action="/addposts" method="POST" style="width: 30%;">
+        <form id="addPostForm" action="/addposts" method="POST" style="width: 30%;">
 
           <div class="form-group">
             <label for="title">Title</label>
@@ -103,6 +103,48 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script>
+          $('#addPostForm').submit(function(e) {
+
+            e.preventDefault();
+
+            var title = $('#title').val();
+            var text  = $('#text').val();
+
+            $.ajax({
+              method: "POST",
+              url:    "/addpost",
+              contentType: "application/json",
+              data: JSON.stringify({
+                title: title,
+                text:  text
+              }),
+              success: function(response) {
+
+                var html = "<table border=1>"                  +
+                           "  <tr>"                            +
+                           "    <td><b>" + title + "</b></td>" +
+                           "  </tr>"                           +
+                           "  <tr>"                            +
+                           "    <td><b>" + text + "</b></td>"  +
+                           "  </tr>"                           +
+                           "</table>";
+
+                $('#posts').append(html);
+
+                $('#title').val('');
+                $('#text').val('');
+
+                if(response.success) {
+                  $('#successResult').show();
+                }
+
+              }
+            });
+
+          });
+        </script>
 
         <script src="js/main.js"></script>
     </body>

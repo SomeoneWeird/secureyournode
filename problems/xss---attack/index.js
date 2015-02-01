@@ -16,28 +16,34 @@ exports.verify = function(args, cb) {
 
   var posts = [];
 
-  var success = false;
-
   var server;
 
   var app = express();
 
   app.use(express.static(path.join(__dirname, 'static')));
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
 
   app.set('views', path.join(__dirname, 'views'));
 
   app.get('/', function(req, res) {
     res.render('xssinjection.ejs', {
       data: {
-        posts:   posts,
-        success: success
+        posts: posts
       }
     });
   });
 
-  app.post('/addposts', function(req, res) {
-    posts.push(req.body);
+  app.post('/addpost', function(req, res) {
+
+    var title = req.body.title;
+    var text  = req.body.text;
+
+    var success = false;
+
+    posts.push({
+      title: title,
+      text:  text
+    });
 
     [ req.body.title, req.body.text ].forEach(function(s) {
       if(/<script>alert\(['"]?5['"]?\);?<\/script>/.test(s)) {
@@ -45,7 +51,9 @@ exports.verify = function(args, cb) {
       }
     });
 
-    res.redirect('/');
+    res.json({
+      success: success
+    });
 
     if(success) {
       cb(true);
