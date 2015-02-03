@@ -20,24 +20,22 @@ exports.verify = function(args, cb) {
   var app = express();
 
   app.use(express.static(path.join(__dirname, 'static')));
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
 
   app.set('views', path.join(__dirname, 'views'));
 
   app.get('/', function(req, res) {
-    res.render('sqlinjection.ejs', {
-      valid: false
-    });
+    res.render('sqlinjection.ejs');
   });
 
-  app.post('/', function(req, res) {
+  app.post('/login', function(req, res) {
 
     var username = req.body.username;
     var password = req.body.password;
 
-    function render(valid) {
-      res.render('sqlinjection.ejs', {
-        valid: valid
+    if(password == 'youcheater') {
+      return res.json({
+        cheated: true
       });
     }
 
@@ -48,27 +46,29 @@ exports.verify = function(args, cb) {
       db.run("CREATE TABLE users (username text(128) PRIMARY KEY NOT NULL, password text(128) );");
       db.run("INSERT INTO users (username, password) VALUES ('admin', 'youcheater');");
 
-      if(password == 'youcheater') {
-        return render('cheated');
-      }
-
       var query = 'SELECT * FROM users WHERE username="' + username + '" AND password="' + password + '";';
 
       db.get(query, function(err, row) {
 
         if(err) {
-          return res.render('sqlinjection.ejs', {
+          return res.json({
             valid: 'error',
             error: err
           });
         }
 
         if(!row) {
-          return render(false);
+          return res.json({
+            valid: false
+          });
         }
 
-        render(true);
         cb(true);
+
+        res.json({
+          valid:    true,
+          username: username
+        });
 
         setTimeout(function() {
           process.exit(0);

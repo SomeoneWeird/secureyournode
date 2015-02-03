@@ -39,35 +39,6 @@
         <h1>SQL Injection - Attack</h1>
         <p>This lesson is going to teach you how to exploit basic SQL Injection</p>
         <p><a class="btn btn-primary btn-lg" href="" role="button">Learn more about SQL Injection</a></p>
-
-        <br>
-          <center>
-
-        <% if(valid) { %>
-
-          <% if(valid == "cheated") { %>
-
-            <div style="width: 50%; background-color: red; border-radius: 20px; webkit-border-radius: 20px;">
-              Oh no! You can't do that!
-            </div>
-
-          <% } else if(valid == "error") { %>
-
-            <div style="width: 50%; background-color: red; border-radius: 20px; webkit-border-radius: 20px;">
-              Oh no! An error occured, are you sure your query was valid?<br>
-              <%= error %>
-            </div>
-
-          <% } else { %>
-
-            <div style="width: 50%; background-color: lime; border-radius: 20px; webkit-border-radius: 20px;">
-              Congrats! You've completed this exercise, you can close this page now.
-            </div>
-
-          <% } %>
-
-        <% } %>
-
       </div>
     </div>
 
@@ -87,7 +58,7 @@
 
         <br>
 
-        <form action="/" method="POST" style="width: 30%;">
+        <form id="loginForm" action="/" method="POST" style="width: 30%;">
 
           <div class="form-group">
             <label for="username">Username</label>
@@ -101,6 +72,10 @@
 
           <button type="submit" class="btn btn-default">Login</button>
         </form>
+
+        <br>
+
+        <div id="loginResult"></div>
 
       </center>
 
@@ -122,6 +97,39 @@
           $('#password').on('input propertychange',   function() {
             $('#querypass').text($('#password').val());
           });
+
+          $('#loginForm').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+              method: "POST",
+              url:    "/login",
+              contentType: "application/json",
+              data: JSON.stringify({
+                username: $('#username').val(),
+                password: $('#password').val()
+              }),
+              success: function(response) {
+
+                if(response.valid !== undefined) {
+                  if(response.valid) {
+                    $('#loginForm').hide();
+                    $('#loginResult').html('Congrats! You\'ve logged in as: <b>' + response.username + '</b>. Lesson complete! You can close this window now.');
+                  } else {
+                    $('#loginResult').text('Invalid login.');
+                  }
+                } else if(response.cheated) {
+                  $('#loginResult').text('OOPS. Looks like you cheated. Try and login using SQL injection instead.');
+                } else if(response.error) {
+                  $('#loginResult').text("OOPS. An error occured :( Are you sure your query is valid?<br>" + response.errror);
+                }
+
+              }
+
+            });
+
+          });
+
         </script>
 
         <script src="js/main.js"></script>
