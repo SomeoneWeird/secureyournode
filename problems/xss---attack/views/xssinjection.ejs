@@ -31,33 +31,42 @@
           </button>
           <a class="navbar-brand" href="#">Secure your Node!</a>
         </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="http://excess-xss.com/">Excess XSS</a></li>
+            <li><a href="http://en.wikipedia.org/wiki/Cross-site_scripting">Wikipedia</a></li>
+            <li><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)">OWASP</a></li>
+            <li><a href="http://www.google.com.au/about/appsecurity/learning/xss/">Google</a></li>
+            <li><a href="http://www.acunetix.com/websitesecurity/cross-site-scripting/">Acunetix</a></li>
+            <li><a href="http://www.veracode.com/security/xss">Veracode</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
 
     <div class="jumbotron">
-      <div class="container">
-        <h1>XSS - Attack</h1>
-        <p>This lesson is going to teach you how to exploit <a href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection"><i>persistent</i></a> <a href="http://www.acunetix.com/blog/articles/persistent-cross-site-scripting/">xss</a>.</p>
-        <p><a class="btn btn-primary btn-lg" href="https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)" role="button">Learn more about <i>persistent</i> xss</a></p>
-
-        <div style="display: none;" id="successResult">
-          <center>
-            <div style="width: 50%; background-color: lime; border-radius: 20px; webkit-border-radius: 20px;">
-              Congrats! You've completed this exercise, you can close this page now.
-            </div>
-          </center>
+      <center>
+        <div class="container">
+          <h1>XSS - Attack</h1>
+          <p>This lesson is going to teach you how to exploit <a href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection"><i>persistent</i></a> <a href="http://www.acunetix.com/blog/articles/persistent-cross-site-scripting/">xss</a>.</p>
+          <div style="display: none;" id="successResult">
+            <center>
+              <div style="width: 50%; background-color: lime; border-radius: 20px; webkit-border-radius: 20px;">
+                Congrats! You've completed this exercise, you can close this page now.
+              </div>
+            </center>
+          </div>
         </div>
-
-      </div>
+      </center>
     </div>
 
     <div class="container">
 
-      XSS happens when user input is not validated and sent to a browser. more words go here eventually<br><br>
-      Your task: add a post that causes the page to alert the number 5 when you load it.
-      <hr>
-
       <center>
+
+        XSS happens when user input is not validated and sent to a browser. more words go here eventually<br><br>
+        Your task: add a post that causes the page to alert the number 5 when you load it.
+        <hr>
 
         <div id="posts">
 
