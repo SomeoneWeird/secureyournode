@@ -1,5 +1,7 @@
 # secureyournode
 
+**You need to run this workshopper on a computer with a web-browser (preferably Chrome or FireFox)**
+
 Security workshop, with exercises in an attack/defense style format.
 
 Attack exercises will teach you how to exploit vulnerabilities.
