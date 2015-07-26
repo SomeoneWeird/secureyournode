@@ -52,7 +52,7 @@ app.post('/login', function(request, response) {
 
     if(err) {
       console.error("OOPS! There was an error:", err);
-      return response.send(500);
+      return response.sendStatus(500);
     }
 
     if(!row) {

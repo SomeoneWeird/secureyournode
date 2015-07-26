@@ -27,14 +27,14 @@
   "homepage": "https://github.com/SomeoneWeird/secureyournode",
   "dependencies": {
     "adventure": "^2.9.0",
-    "async": "^0.9.0",
+    "async": "^1.4.0",
     "body-parser": "^1.10.2",
     "ejs": "^2.2.3",
     "express": "^4.11.1",
-    "ncp": "^1.0.1",
-    "openport": "0.0.3",
-    "opn": "^1.0.1",
+    "ncp": "^2.0.0",
+    "openport": "0.0.4",
+    "opn": "^3.0.2",
     "sqlite3": "^3.0.4",
-    "supertest": "^0.15.0"
+    "supertest": "^1.0.1"
   }
 }
