@@ -55,13 +55,19 @@
 
     <div class="container">
 
-      blah<br><br>
+      SQL Injection is possible when you don't sanatize input from a user. If you allow a user to enter anything, and then use that to generate queries, it's possible for a user to craft special text that makes your database behave in ways you didn't intend. You could change a query to do basically anything - match any user account, return all user accounts, or even drop the user table!
 
-      Objective: bypass login to.. login as 'admin'.
+      <br><br>
+
+      <b>Setup:</b> There is an account called <i>admin</i>, with the password <i>password</i>.
+
+      <br>
+
+      <b>Objective:</b> Bypass login, and login to the <i>admin</i> account, without using the admins password.
 
       <hr>
 
-        The SQL query that will happen is: SELECT * from users WHERE username="<b><span id="queryuser"></span></b>" AND password="<b><span id="querypass"></span></b>";
+      <center>The SQL query that will happen is: SELECT * from users WHERE username="<b><span id="queryuser"></span></b>" AND password="<b><span id="querypass"></span></b>";</center>
 
       <hr>
 
@@ -130,7 +136,7 @@
                     $('#loginResult').text('Invalid login.');
                   }
                 } else if(response.cheated) {
-                  $('#loginResult').text('OOPS. Looks like you cheated. Try and login using SQL injection instead.');
+                  $('#loginResult').text('Try and login using SQL injection instead :)');
                 } else if(response.error) {
                   $('#loginResult').text("OOPS. An error occured :( Are you sure your query is valid?<br>" + response.errror);
                 }

@@ -33,7 +33,7 @@ exports.verify = function(args, cb) {
     var username = req.body.username;
     var password = req.body.password;
 
-    if(password == 'youcheater') {
+    if(password == 'password') {
       return res.json({
         cheated: true
       });
@@ -44,7 +44,7 @@ exports.verify = function(args, cb) {
     db.serialize(function() {
 
       db.run("CREATE TABLE users (username text(128) PRIMARY KEY NOT NULL, password text(128) );");
-      db.run("INSERT INTO users (username, password) VALUES ('admin', 'youcheater');");
+      db.run("INSERT INTO users (username, password) VALUES ('admin', 'password');");
 
       var query = 'SELECT * FROM users WHERE username="' + username + '" AND password="' + password + '";';
 
